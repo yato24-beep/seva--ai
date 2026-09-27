@@ -1,39 +1,103 @@
-# SEVA AI - Smart Citizen Services Portal
+# SEVA AI
 
-SEVA AI is an AI-empowered digital governance platform designed to simplify citizen services, document vault management, and application workflows.
+> AI-powered citizen platform for discovering, understanding, preparing, and tracking government services.
 
-## Architecture
+SEVA AI is a citizen-facing government services platform that helps people navigate government processes through a single digital interface.
 
-- **Backend**: FastAPI, SQLAlchemy 2.0, Alembic, PostgreSQL, PyJWT, Passlib (Bcrypt)
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
-- **Infrastructure**: Docker & Docker Compose
+Instead of requiring citizens to understand complicated government procedures, document requirements, application dependencies, and verification steps themselves, SEVA AI guides them through the process using structured government rules, AI-assisted conversation, document processing, OCR, and application workflow management.
 
-## Getting Started
+---
 
-### Prerequisites
-- Docker & Docker Compose (or local PostgreSQL 16 & Node.js 20+)
-- Python 3.11+
+# Table of Contents
 
-### Local Setup (Backend)
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-alembic upgrade head
-python -m app.seed
-uvicorn app.main:app --reload --port 8000
-```
+- [Overview](#overview)
+- [Core Features](#core-features)
+- [Citizen Experience](#citizen-experience)
+- [Government Service Discovery](#government-service-discovery)
+- [AI Chatbot](#ai-chatbot)
+- [Application Management](#application-management)
+- [Document Management](#document-management)
+- [OCR and Document Extraction](#ocr-and-document-extraction)
+- [AI Document Verification](#ai-document-verification)
+- [Document Preparation Workflow](#document-preparation-workflow)
+- [Application Readiness](#application-readiness)
+- [Government Rules Engine](#government-rules-engine)
+- [Dependencies and Eligibility](#dependencies-and-eligibility)
+- [Authentication and Security](#authentication-and-security)
+- [Privacy and PII Protection](#privacy-and-pii-protection)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Local Development](#local-development)
+- [Environment Variables](#environment-variables)
+- [Database and Migrations](#database-and-migrations)
+- [API](#api)
+- [Testing](#testing)
+- [Document Processing Flow](#document-processing-flow)
+- [Application Lifecycle](#application-lifecycle)
+- [Verification States](#verification-states)
+- [Design Principles](#design-principles)
+- [Development Workflow](#development-workflow)
+- [Current Status](#current-status)
+- [Future Scope](#future-scope)
 
-### Local Setup (Frontend)
-```bash
-cd frontend
-npm install
-npm run dev
-```
+---
 
-### Docker Setup
-```bash
-docker-compose up --build
-```
+# Overview
+
+SEVA AI aims to simplify access to government services by combining:
+
+- Government service discovery
+- Eligibility guidance
+- Requirement discovery
+- AI-powered conversation
+- Natural-language understanding
+- Application creation
+- Application tracking
+- Document upload
+- Document vault
+- OCR
+- AI document extraction
+- Document verification
+- Missing-document detection
+- Application readiness evaluation
+- Progress tracking
+- Jurisdiction-aware workflows
+
+The platform is designed around a simple principle:
+
+> **AI helps citizens understand and navigate the process, while structured government rules remain the source of truth for government requirements.**
+
+---
+
+# Core Features
+
+## 1. Government Service Discovery
+
+Citizens can browse available government services through the service catalogue.
+
+The service catalogue provides information such as:
+
+- Service name
+- Service description
+- Eligibility
+- Required documents
+- Alternative documents
+- Application information
+- Fees
+- Processing time
+- Jurisdiction
+- Application workflow
+
+Citizens do not need to know the exact official terminology before starting.
+
+---
+
+# 2. Natural-Language Service Search
+
+Citizens can describe what they need in ordinary language.
+
+For example:
+
+```text
+I need income certificate for scholarship
