@@ -37,6 +37,17 @@ async def startup_event():
             await seed_data()
         except Exception as e:
             print(f"Startup seed notice: {e}")
+
+    # Pre-warm OCR engine in background thread to eliminate first-upload latency
+    import threading
+    def _warmup():
+        try:
+            from app.documents.ocr import OCREngine
+            OCREngine.get_paddle_ocr()
+        except Exception:
+            pass
+    threading.Thread(target=_warmup, daemon=True).start()
+
 app.include_router(mock_api.router)
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(profile.router, prefix=settings.API_V1_STR)

@@ -16,10 +16,10 @@ logger = logging.getLogger(__name__)
 
 # Minimum and maximum dimension constraints for optimal OCR recognition
 MIN_OCR_DIM = 600
-MAX_OCR_DIM = 3200
+MAX_OCR_DIM = 1600
 
 
-def render_pdf_to_images(pdf_path: str, max_pages: int = 5) -> List[Image.Image]:
+def render_pdf_to_images(pdf_path: str, max_pages: int = 2) -> List[Image.Image]:
     """
     Renders pages of a PDF document into PIL RGB Images using pypdfium2.
     """
@@ -34,8 +34,8 @@ def render_pdf_to_images(pdf_path: str, max_pages: int = 5) -> List[Image.Image]
 
         for page_idx in range(num_pages):
             page = pdf[page_idx]
-            # Render at 2.0 scale (~144-200 DPI) for sharp text recognition
-            bitmap = page.render(scale=2.0)
+            # Render at 1.5 scale (~120-150 DPI) for fast and sharp text recognition
+            bitmap = page.render(scale=1.5)
             pil_image = bitmap.to_pil().convert("RGB")
             images.append(pil_image)
         pdf.close()
@@ -122,8 +122,11 @@ def preprocess_image_for_ocr(image: Image.Image) -> Image.Image:
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         enhanced_gray = clahe.apply(gray)
 
-        # Mild bilateral filtering to denoise while keeping character edges sharp
-        denoised = cv2.bilateralFilter(enhanced_gray, d=5, sigmaColor=50, sigmaSpace=50)
+        # Mild filtering for smaller images, otherwise use sharp CLAHE output directly
+        if max_dim <= 1000:
+            denoised = cv2.bilateralFilter(enhanced_gray, d=3, sigmaColor=30, sigmaSpace=30)
+        else:
+            denoised = enhanced_gray
 
         # Convert back to RGB for OCR model
         enhanced_rgb = cv2.cvtColor(denoised, cv2.COLOR_GRAY2RGB)
